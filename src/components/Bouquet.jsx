@@ -18,21 +18,23 @@ function leafPath(cx, cy, dir) {
   return `M${cx} ${cy} C ${cx + dx * 0.55} ${cy - 3} ${cx + dx} ${cy + 7} ${cx + dx * 1.4} ${cy + 9} C ${cx + dx * 0.85} ${cy + 15} ${cx + dx * 0.3} ${cy + 8} ${cx} ${cy} Z`;
 }
 
-// Anillos concéntricos: la flor más alta queda al centro (foco), las
-// medianas flanquean a los lados, y las pequeñas rellenan los huecos
-// hacia afuera. Los tallos son más cortos hacia afuera porque esas
-// flores quedan casi a ras del borde del bowl.
+// Anillos concéntricos en forma de abanico/triángulo: la flor central es
+// la más alta (foco), y las laterales descienden progresivamente. Los
+// tallos son largos y quedan mayormente VISIBLES — solo su último tramo
+// inferior se esconde detrás del borde del bowl.
 const RINGS = [
-  { proportion: 0.08, size: 62, stemHeight: 156, xRange: 0, rotateRange: 0 },
-  { proportion: 0.22, size: 54, stemHeight: 128, xRange: 20, rotateRange: 6 },
-  { proportion: 0.32, size: 42, stemHeight: 100, xRange: 32, rotateRange: 9 },
-  { proportion: 0.38, size: 36, stemHeight: 76, xRange: 42, rotateRange: 12 },
+  { proportion: 0.08, size: 64, stemHeight: 140, xRange: 0, rotateRange: 0 },
+  { proportion: 0.22, size: 56, stemHeight: 115, xRange: 38, rotateRange: 12 },
+  { proportion: 0.32, size: 46, stemHeight: 95, xRange: 55, rotateRange: 17 },
+  { proportion: 0.38, size: 38, stemHeight: 75, xRange: 65, rotateRange: 20 },
 ];
 
-// Cuánto entra cada tallo dentro del bowl antes de quedar oculto por el
-// frente. El punto donde arrancan los tallos está deliberadamente bajo:
-// así el frente del bowl los tapa en vez de que floten sobre el borde.
-const STEM_BASE = 16;
+// Nivel (desde la base del contenedor) al que llega el borde frontal del
+// bowl — es la línea de oclusión. Los tallos arrancan muy cerca de esa
+// línea (apenas 22px por debajo) para que SOLO se oculte su último
+// tramo, no la mayor parte del ramo.
+const RIM_LEVEL = POT_H - RIM_CY;
+const STEM_BASE = RIM_LEVEL - 22;
 
 function ringCounts(total) {
   const counts = RINGS.map((ring) => Math.round(ring.proportion * total));
