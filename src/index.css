@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", "Iowan Old Style", serif;
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+
+  --color-cream: #fdf9ee;
+  --color-cream-deep: #f7efd9;
+  --color-warm-white: #fffdf6;
+  --color-beige: #efe4c8;
+  --color-sunflower: #f4b400;
+  --color-sunflower-soft: #f6c445;
+  --color-pastel-yellow: #fbe28a;
+  --color-gold: #c9982c;
+  --color-gold-soft: #e0b95f;
+  --color-leaf: #6b7a4f;
+  --color-leaf-deep: #4c5a37;
+  --color-ink: #2a2114;
+  --color-ink-soft: #4a3f2c;
+  --color-night: #1a1408;
+  --color-night-deep: #100c05;
+
+  --animate-drift: drift 9s ease-in-out infinite;
+  --animate-sway: sway 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(4deg); }
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-warm-white text-ink font-sans antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--color-pastel-yellow);
+    color: var(--color-ink);
+  }
+}
+
+@layer utilities {
+  .font-serif-display {
+    font-family: var(--font-serif);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
